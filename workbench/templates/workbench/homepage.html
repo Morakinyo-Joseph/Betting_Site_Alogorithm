@@ -2,6 +2,12 @@
 
 {% block content %}
 
+    {% for message in messages %}
+    <div style="color: green;">
+        {{ message }}
+    </div>
+    {% endfor %}
+
     {% for game in game %}
         
         {% if game.name == "Football" %}

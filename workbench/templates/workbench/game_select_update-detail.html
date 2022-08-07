@@ -6,9 +6,23 @@
 
 {% for slip in slip %}
 
-    {% if request.user.username in  %}
+    {% comment %} {% if request.user.username == slip.user.username %}
+        <p>You selected "{{ slip.predict }}" for this game</p>  
+    {% endif %} {% endcomment %}
 
 {% endfor %}
+
+<form method="post">
+
+    {% csrf_token %}
+
+    <div style="font-size: 30px;">
+        {{ form.as_p }}
+    </div>
+
+    <input type="submit", value="submit">
+
+</form>
 
 
 {% endblock %}

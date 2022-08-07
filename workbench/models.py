@@ -62,3 +62,9 @@ class Slip(models.Model):
         return self.user.username + ": " + self.picked_game.name + " -- " + self.picked_game.player1 + " VS " + self.picked_game.player2 + " (" + self.predict + ")" 
 
 
+
+class Ticket(models.Model):
+    game_slip = models.ForeignKey(Slip, on_delete=models.CASCADE)
+    ticket_code = models.CharField(max_length=10)
+
+
