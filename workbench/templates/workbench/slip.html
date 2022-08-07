@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if request.user.is_authenticated %}
+
+        <h2 style="text-decoration: underline;">Game Slip</h2>
+
+        {% for slip in slip %}
+
+            <hr>
+
+            <div>
+
+                <a href="{% url 'play:game-update-detail' slip.picked_game.id %}", style="text-decoration: none; color: black;">
+
+                    <p style="font-size: 20px;">{{ slip.picked_game.player1 }} VS {{ slip.picked_game.player2 }}</p>
+                    <p style="font-size: 18px;">Selected: {{ slip.predict }}</p>
+                    <p style="font-size: 15px;">{{ slip.picked_game.name }}</p>
+
+                </a>
+
+            </div>
+
+            <hr>
+
+        {% endfor %}
+
+    {% endif %}
+
+{% endblock %}

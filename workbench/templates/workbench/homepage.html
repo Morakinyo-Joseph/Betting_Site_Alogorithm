@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% for game in game %}
+        
+        {% if game.name == "Football" %}
+        <h2 style="text-decoration: underline;">Football</h2>
+        <ul>
+            <li>
+                <a href="{% url 'play:game-update-detail' game.id %}", style="text-decoration: none; color: black;">
+                    <p style="font-size: 20px;">{{ game.player1 }} VS {{ game.player2 }}</p>
+                </a>
+            </li>
+        </ul>
+
+        {% elif game.name == "Basketball" %}
+        <h2 style="text-decoration: underline;">Basketball</h2>
+        <ul>
+            <li>
+                <a href="{% url 'play:game-update-detail' game.id %}", style="text-decoration: none; color: black;">
+                    <p style="font-size: 20px;">{{ game.player1 }} VS {{ game.player2 }}</p>
+                </a>
+            </li>
+        </ul>
+
+        {% endif %}
+
+    {% endfor %}
+
+{% endblock %}
