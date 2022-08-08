@@ -8,5 +8,5 @@ urlpatterns = [
 
     path('slip', views.slip_page, name="slip"),
 
-    path('game-UpdateDetail/<str:pk>', views.game_UpdateDetail, name="game-update-detail"),
+    path('game-UpdateDetail/<str:pk>', views.game_UpdateView, name="game-update-detail"),
 ]

@@ -4,13 +4,9 @@
 
 <p style="font-size: 50px;">{{ game.player1 }} VS {{ game.player2 }}</p>
 
-{% for slip in slip %}
-
-    {% comment %} {% if request.user.username == slip.user.username %}
-        <p>You selected "{{ slip.predict }}" for this game</p>  
-    {% endif %} {% endcomment %}
-
-{% endfor %}
+{% if slip.user.username == request.user.username %}
+        Previous Prediction: {{ slip.predict }}
+{% endif %}
 
 <form method="post">
 

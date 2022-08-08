@@ -1,3 +1,4 @@
+from calendar import c
 from django.db import models
 from django.contrib.auth import get_user_model
 from datetime import datetime
@@ -23,7 +24,6 @@ class Game(models.Model):
     draw_odds = models.FloatField()
 
     created_on = models.DateTimeField(default=datetime.now)
-
 
     def __str__(self):
         return self.name + ": " + self.player1 + " VS " + self.player2
@@ -64,7 +64,17 @@ class Slip(models.Model):
 
 
 class Ticket(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     game_slip = models.ForeignKey(Slip, on_delete=models.CASCADE)
     ticket_code = models.CharField(max_length=10)
+
+    TICKET_OPTIONS = (
+        ("Won", "Won"),
+        ("Lost", "Lost"),
+        ("Void", "Void"),
+    )
+
+    ticket_option = models.CharField(max_length=10, choices=TICKET_OPTIONS)
+    ticket_date = models.DateTimeField(default=datetime.now)
 
 

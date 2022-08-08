@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Game, GameResult, Slip
+from .models import Game, GameResult, Slip, User
 from .forms import GameEditForm
 from django.contrib import messages
 
@@ -15,22 +15,44 @@ def homepage(request):
 
 
 
-def game_UpdateDetail(request, pk):
+def game_UpdateView(request, pk):
     game = Game.objects.get(id=pk)
-    game_slip = Slip.objects.get(picked_game=game)
-    form = GameEditForm(instance=game_slip)
+    slip = Slip.objects.all()
+
+    current_user = request.user
+
+    form = GameEditForm()
 
     if request.method == "POST":
-        form = GameEditForm(request.POST, instance=game_slip)
 
-        if form.is_valid():
-            form.save()
+        if Slip.objects.filter(picked_game=game).exists():
+            up_slip = Slip.objects.get(picked_game=game)
+            form = GameEditForm(request.POST, instance=up_slip)
 
-            messages.success(request, "Upload success!")
-            return redirect('play:homepage')
-        
+            if form.is_valid():
+                form.save()
+
+                messages.success(request, 'Slip update successful')
+                return redirect('play:slip')
+
+            else:
+                return redirect('play:homepage')
+
         else:
-            return redirect('play:homepage')
+            form = GameEditForm(request.POST)
+
+            if form.is_valid():
+                prediction = form.cleaned_data['predict']
+
+                new_slip = Slip.objects.create(user=current_user, picked_game=game, predict=prediction)
+                new_slip.save()
+
+                messages.success(request, "Upload success!")
+                return redirect('play:homepage')
+            
+            else:
+                return redirect('play:homepage')
 
     else:
-        return render(request, "workbench/game_select_update-detail.html", {"game": game, "form": form})
+        return render(request, "workbench/game_select_update.html", {"game": game, "form": form, "slip": slip})
+
