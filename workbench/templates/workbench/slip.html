@@ -3,7 +3,7 @@
 {% block content %}
 
     {% for message in messages %}
-        <div style="color: greenyellow;">
+        <div style="color: green;">
             {{ message }}
         </div>
     {% endfor %}
@@ -12,49 +12,40 @@
 
         <h2 style="text-decoration: underline;">Game Slip</h2>
 
-        <form method="post">
-            {% csrf_token %}
 
-            {% for slip in slip %}
+        {% for slip in slip %}
+            <hr>
+            <div>
+                <a href="{% url 'play:game-update-detail' slip.picked_game.id %}", style="text-decoration: none; color: black;">
 
-                <hr>
+                    <p style="font-size: 20px;">{{ slip.picked_game.player1 }} VS {{ slip.picked_game.player2 }}</p>
+                    <p style="font-size: 18px;">Selected: {{ slip.predict }}</p>
+                    <p style="font-size: 15px;">{{ slip.picked_game.name }}</p>
 
-                <div>
-
-                    <a href="{% url 'play:game-update-detail' slip.picked_game.id %}", style="text-decoration: none; color: black;">
-
-                        <p style="font-size: 20px;">{{ slip.picked_game.player1 }} VS {{ slip.picked_game.player2 }}</p>
-                        <p style="font-size: 18px;">Selected: {{ slip.predict }}</p>
-                        <p style="font-size: 15px;">{{ slip.picked_game.name }}</p>
-
-                    </a>
-
-                    <br>
-
-                    <div>
-                        <button> Remove </button>
-                    </div>
-
-                </div>
-
-                <hr>
-
-            {% endfor %}
-
-            <form>  
+                </a>
+                <br>
 
                 <div>
-                    
-                    <input type="number", placeholder="NGN0.00">
-
-                    <input type="submit", value=stake>
-
+                    <a href="{% url 'play:slip-game-remove' slip.id %}"><button> Remove </button></a>
                 </div>
-            </form>
+            </div>
+
+            <hr>
+
+        {% endfor %}
 
 
+
+        <form method="post"> 
+            {% csrf_token %} 
+
+            <div>
+                <input type="number", placeholder="NGN 0.00", name="staked_amount">
+                <input type="submit", value="Stake", name="stake">
+            </div>
 
         </form>
+
 
     {% endif %}
 

@@ -2,11 +2,15 @@
 
 {% block content %}
 
+
 <p style="font-size: 50px;">{{ game.player1 }} VS {{ game.player2 }}</p>
+
 
 {% for slip in slip %}
     {% if slip.picked_game == game  %}
-        Selected: {{ slip.predict }}
+        <div style="font-size: 25px;">
+            Selected: {{ slip.predict }}
+        </div>
     {% endif %}
 {% endfor %}
 

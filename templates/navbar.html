@@ -11,10 +11,12 @@
 
 {% elif request.user.is_authenticated %}
     
-    <a href="{% url 'register:logout' %}"><button> Logout </button></a>
     <a href="{% url 'play:homepage' %}"><button> Home </button></a>
-    <a href="{% url 'play:slip' %}"><button> Ticket </button></a>
+    <a href="{% url 'play:slip' %}"><button> Slip </button></a>
+    <a href=""><button> Ticket </button></a>
+
     <a href=""><button> Profile </button></a>
+    <a href="{% url 'register:logout' %}"><button> Logout </button></a>
 
 {% endif %}
 

@@ -1,11 +1,16 @@
 from django.shortcuts import render, redirect
-from .models import Game, GameResult, Slip, User
+from .models import Game, Slip
 from .forms import GameEditForm
 from django.contrib import messages
 
 
 def slip_page(request):
     slip = Slip.objects.all()
+    game = Game.objects.all()
+
+    if request.method == "POST":
+        pass
+
     return render(request, "workbench/slip.html", {"slip": slip})
 
 
@@ -56,3 +61,10 @@ def game_UpdateView(request, pk):
     else:
         return render(request, "workbench/game_select_update.html", {"game": game, "form": form, "slip": slip})
 
+
+def slip_removal(request, pk):
+    slip = Slip.objects.get(id=pk)
+    slip.delete()
+
+    messages.info(request, 'game has been removed')
+    return redirect('play:slip')

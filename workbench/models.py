@@ -1,4 +1,5 @@
 from calendar import c
+from telnetlib import GA
 from django.db import models
 from django.contrib.auth import get_user_model
 from datetime import datetime
@@ -65,7 +66,7 @@ class Slip(models.Model):
 
 class Ticket(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    game_slip = models.ForeignKey(Slip, on_delete=models.CASCADE)
+    selected_game = models.ForeignKey(Game, on_delete=models.CASCADE)
     ticket_code = models.CharField(max_length=10)
 
     TICKET_OPTIONS = (
@@ -76,5 +77,8 @@ class Ticket(models.Model):
 
     ticket_option = models.CharField(max_length=10, choices=TICKET_OPTIONS)
     ticket_date = models.DateTimeField(default=datetime.now)
+
+    def __str__(self):
+        return "Ticket: " + self.ticket_code + " " + self.user + " on " + self.ticket_date
 
 
